@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Blocker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Website Blocker</h1>
+      <p class="subtitle">Control your browsing during time slots</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-button active" data-tab="sites">Blocked Sites</button>
+      <button class="tab-button" data-tab="slots">Time Slots</button>
+    </div>
+
+    <!-- Blocked Sites Tab -->
+    <div class="tab-content active" id="sites-tab">
+      <div class="section-header">
+        <h2>Blocked Websites</h2>
+        <button class="btn btn-primary" id="add-site-btn">+ Add Site</button>
+      </div>
+      
+      <div class="sites-list" id="sites-list">
+        <!-- Sites will be dynamically added here -->
+      </div>
+    </div>
+
+    <!-- Time Slots Tab -->
+    <div class="tab-content" id="slots-tab">
+      <div class="section-header">
+        <h2>Time Slots</h2>
+        <button class="btn btn-primary" id="add-slot-btn">+ Add Time Slot</button>
+      </div>
+      
+      <div class="slots-list" id="slots-list">
+        <!-- Time slots will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Site Modal -->
+  <div class="modal" id="site-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Blocked Website</h2>
+        <button class="close-btn" id="close-site-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="site-url">Website URL (e.g., example.com, facebook.com)</label>
+          <input type="text" id="site-url" placeholder="example.com" />
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="site-enabled" checked />
+            <span>Enabled</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="cancel-site-btn">Cancel</button>
+          <button class="btn btn-primary" id="save-site-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Time Slot Modal -->
+  <div class="modal" id="slot-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Time Slot</h2>
+        <button class="close-btn" id="close-slot-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="slot-name">Name (optional)</label>
+          <input type="text" id="slot-name" placeholder="Work Hours, Study Time, etc." />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="slot-start">Start Time</label>
+            <input type="time" id="slot-start" />
+          </div>
+          <div class="form-group">
+            <label for="slot-end">End Time</label>
+            <input type="time" id="slot-end" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Days</label>
+          <div class="days-selector">
+            <label class="day-checkbox">
+              <input type="checkbox" value="0" data-day="Sunday" />
+              <span>S</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="1" data-day="Monday" />
+              <span>M</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="2" data-day="Tuesday" />
+              <span>T</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="3" data-day="Wednesday" />
+              <span>W</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="4" data-day="Thursday" />
+              <span>T</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="5" data-day="Friday" />
+              <span>F</span>
+            </label>
+            <label class="day-checkbox">
+              <input type="checkbox" value="6" data-day="Saturday" />
+              <span>S</span>
+            </label>
+          </div>
+          <small class="help-text">Leave empty for all days</small>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="slot-enabled" checked />
+            <span>Enabled</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="cancel-slot-btn">Cancel</button>
+          <button class="btn btn-primary" id="save-slot-btn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+
