@@ -11,6 +11,12 @@ Stay focused by automatically redirecting distracting sites during the times you
 - Works across all tabs and windows
 - Clean, simple popup UI
 
+## Known issues / things still being adjusted ⌛️
+
+- Delete buttons in the popup may not act for some users in some Chrome versions. If clicking Delete doesn’t remove an item and you see no popup‑console logs, close and reopen the popup and try again.
+- Other content blockers (e.g., uBlock) can flood the console with network errors unrelated to this extension. Use the popup’s DevTools console for extension logs (right‑click inside the popup → Inspect).
+- Timezone uses your system time. If you frequently change timezones, recheck slot hours.
+
 ## Install (Chrome/Chromium-based browsers)
 
 1. Download or clone this repo
@@ -40,26 +46,3 @@ Notes:
 ## What happens when a site is blocked?
 
 When you navigate to a blocked site during an active slot, you’ll be redirected to the built‑in `blocked.html` page with a message and a link back to what you were doing.
-
-## Known issues / things still being adjusted
-
-- Delete buttons in the popup may not act for some users in some Chrome versions. If clicking Delete doesn’t remove an item and you see no popup‑console logs, close and reopen the popup and try again.
-- Other content blockers (e.g., uBlock) can flood the console with network errors unrelated to this extension. Use the popup’s DevTools console for extension logs (right‑click inside the popup → Inspect).
-- Timezone uses your system time. If you frequently change timezones, recheck slot hours.
-
-## Troubleshooting
-
-- Nothing is being blocked
-  - Ensure at least one slot is enabled and currently active
-  - Ensure the site itself is enabled
-  - Confirm the day selection matches today (or leave days empty for all days)
-  - Try reloading the extension on `chrome://extensions` (Developer mode → Reload)
-
-- Delete button seems unresponsive
-  - Open the popup, then right‑click inside it → Inspect to open the popup’s console
-  - You should see “Popup init complete: listeners attached” on load
-  - Try clicking Delete again and check for logs
-
-- Where do I see logs?
-  - Popup UI logs: open the popup → right‑click → Inspect
-  - Background logs: `chrome://extensions` → this extension → “Service worker” → Inspect
