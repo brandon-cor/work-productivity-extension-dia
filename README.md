@@ -1,122 +1,98 @@
-# Website Blocker - Time Slots Chrome Extension
+# Website Blocker — Time Slots
 
-A Chrome extension that allows you to block websites during specified time slots. Perfect for productivity and focus during work hours or study time.
+Stay focused by automatically redirecting distracting sites during the times you choose.
 
-## Features
+## What you can do
 
-- ✅ Block unlimited websites
-- ✅ Schedule blocking during specific time slots
-- ✅ Choose which days of the week blocking is active
-- ✅ Enable/disable sites and time slots individually
-- ✅ Modern, user-friendly interface
-- ✅ Works with all websites
+- ✅ Add any number of websites to block (e.g., `youtube.com`, `reddit.com`)
+- ✅ Create time slots with start/end times
+- ✅ Choose the days each slot applies to (leave empty = all days)
+- ✅ Toggle sites and slots on/off individually
+- ✅ Works across all tabs and windows
+- ✅ Clean, simple popup UI
 
-## Installation
+## Install (Chrome/Chromium-based browsers)
 
-1. **Download or clone this repository** to your computer
+1. Download or clone this repo
    ```bash
+   git clone https://github.com/yourname/website-blocker-extension.git
    cd website-blocker-extension
    ```
+2. Open Chrome and go to `chrome://extensions/`
+3. Enable “Developer mode” (top-right)
+4. Click “Load unpacked” and select this `website-blocker-extension` folder
+5. Pin the extension if you want quick access from the toolbar
 
-2. **Open Chrome Extensions Page**
-   - Open Google Chrome
-   - Navigate to `chrome://extensions/`
-   - Or go to Menu (three dots) → Extensions → Manage extensions
+Icons are already included in `icons/`.
 
-3. **Enable Developer Mode**
-   - Toggle the "Developer mode" switch in the top-right corner
+## Using the popup
 
-4. **Load the Extension**
-   - Click "Load unpacked" button
-   - Select the `website-blocker-extension` folder
-   - The extension should now appear in your extensions list
+1. Click the extension icon to open the popup
+2. Blocked Sites tab
+   - Click “+ Add Site”, enter a domain like `facebook.com`, Save
+   - Toggle a site on/off anytime
+3. Time Slots tab
+   - Click “+ Add Time Slot”, set start/end times, choose days (or leave empty for all), Save
+   - Toggle a slot on/off anytime
 
-5. **Set Up Icons** (Optional)
-   - The extension needs icon files. You can create simple PNG icons at:
-     - `icons/icon16.png` (16x16 pixels)
-     - `icons/icon48.png` (48x48 pixels)
-     - `icons/icon128.png` (128x128 pixels)
-   - Or download placeholder icons from any icon generator website
-   - The extension will still work without icons, but Chrome may show a default icon
+Notes:
+- A site is only blocked when there is at least one enabled time slot that is currently active.
+- Slots that span midnight are supported (e.g., 22:00 → 06:00).
 
-## How to Use
+## What happens when a site is blocked?
 
-1. **Click the extension icon** in your Chrome toolbar
+When you navigate to a blocked site during an active slot, you’ll be redirected to the built‑in `blocked.html` page with a message and a link back to what you were doing.
 
-2. **Add Blocked Websites**
-   - Go to the "Blocked Sites" tab
-   - Click "+ Add Site"
-   - Enter the website domain (e.g., `facebook.com`, `twitter.com`)
-   - Click "Save"
+## Known issues / things still being adjusted
 
-3. **Create Time Slots**
-   - Go to the "Time Slots" tab
-   - Click "+ Add Time Slot"
-   - Set start and end times
-   - Select which days of the week this slot is active (or leave empty for all days)
-   - Optionally give it a name (e.g., "Work Hours", "Study Time")
-   - Click "Save"
-
-4. **Enable/Disable**
-   - Use the toggle switches next to each site or time slot to enable/disable them
-   - Websites are only blocked when:
-     - The website is enabled
-     - At least one time slot is enabled
-     - Current time falls within an active time slot
-     - Current day matches the time slot's selected days
-
-## Examples
-
-### Block Social Media During Work Hours
-- Add sites: `facebook.com`, `twitter.com`, `instagram.com`
-- Create time slot: Monday-Friday, 9:00 AM - 5:00 PM
-
-### Block Distractions During Study Time
-- Add sites: `reddit.com`, `youtube.com`, `netflix.com`
-- Create time slot: All days, 7:00 PM - 10:00 PM
-
-### Overnight Blocking
-- Add sites: any distracting sites
-- Create time slot: All days, 10:00 PM - 6:00 AM (spans midnight)
-
-## Technical Details
-
-- **Manifest Version**: 3 (Chrome Extension Manifest V3)
-- **Blocking Method**: Uses Chrome's `webRequest` API to cancel requests
-- **Storage**: Uses Chrome's `sync` storage API (syncs across your Chrome instances)
-- **Permissions**: 
-  - `webRequest` and `webRequestBlocking`: To intercept and block requests
-  - `storage`: To save your settings
-  - `<all_urls>`: To block any website
-
-## Notes
-
-- The extension blocks websites by canceling network requests during active time slots
-- If you need to access a blocked site urgently, you can disable the extension or turn off the specific time slot
-- Settings sync across all Chrome instances if you're signed into Chrome
-- The extension checks time slots in real-time, so changes take effect immediately
+- Delete buttons in the popup may not act for some users in some Chrome versions. If clicking Delete doesn’t remove an item and you see no popup‑console logs, close and reopen the popup and try again. This is being refined for reliability.
+- If your browser blocks popup confirm dialogs, deletion will proceed without a visible prompt to avoid silent failures.
+- Other content blockers (e.g., uBlock) can flood the console with network errors unrelated to this extension. Use the popup’s DevTools console for extension logs (right‑click inside the popup → Inspect).
+- Timezone uses your system time. If you frequently change timezones, recheck slot hours.
 
 ## Troubleshooting
 
-- **Extension not blocking sites**: 
-  - Make sure both the site and time slot are enabled
-  - Verify the current time is within the time slot
-  - Check that the current day matches the time slot's selected days
-  
-- **Can't load extension**:
-  - Make sure Developer mode is enabled
-  - Verify all files are in the correct folder
-  - Check the browser console for errors (right-click extension icon → Inspect popup)
+- Nothing is being blocked
+  - Ensure at least one slot is enabled and currently active
+  - Ensure the site itself is enabled
+  - Confirm the day selection matches today (or leave days empty for all days)
+  - Try reloading the extension on `chrome://extensions` (Developer mode → Reload)
+
+- Delete button seems unresponsive
+  - Open the popup, then right‑click inside it → Inspect to open the popup’s console
+  - You should see “Popup init complete: listeners attached” on load
+  - Try clicking Delete again and check for logs
+
+- Where do I see logs?
+  - Popup UI logs: open the popup → right‑click → Inspect
+  - Background logs: `chrome://extensions` → this extension → “Service worker” → Inspect
 
 ## Privacy
 
-- This extension does not collect or transmit any data
-- All settings are stored locally in Chrome's sync storage
-- No external servers or APIs are used
-- The extension only blocks websites; it doesn't track or monitor your browsing
+- No data is sent to any server. All settings are stored using Chrome’s sync storage (and can sync across your signed‑in Chrome profiles).
+- The extension only redirects pages based on your rules; it doesn’t track, profile, or sell data.
+
+## Permissions (why they’re needed)
+
+- `webNavigation`: detect navigation and redirect before the page loads
+- `tabs`: navigate the current tab to the blocked page
+- `storage`: save your sites and time slot settings
+- Host permissions `<all_urls>`: needed to match and act on any site you choose
+
+## Technical (for advanced users)
+
+- Manifest V3 with a background service worker (`background.js`)
+- Uses `chrome.webNavigation.onBeforeNavigate` to redirect to a local `blocked.html`
+- Time slot evaluation supports overnight spans and day matching
+- Storage changes trigger a background recheck across all tabs
+
+## Roadmap
+
+- Improved reliability for Delete actions in the popup
+- Import/export settings
+- Temporary “Pause for X minutes” control
+- Options page with more controls
 
 ## License
 
-Free to use and modify as needed.
-
-# work-productivity-extension-dia
+Free to use and modify. No warranty.
